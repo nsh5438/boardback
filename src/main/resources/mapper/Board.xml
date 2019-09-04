@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hs.dgsw.notice_back.Domain.BoardMapper">
+
+    <select id="getKind" resultType="HashMap" parameterType="String">
+        select * from board where kind = #{kind} order by updated desc ;
+    </select>
+
+    <select id="getSortLike_Kind" resultType="HashMap" parameterType="String">
+        select * from board where kind = #{kind} order by like_num desc ;
+    </select>
+
+    <select id="getSortView_Kind" resultType="HashMap" parameterType="String">
+        select * from board where kind = #{kind} order by view_num desc ;
+    </select>
+
+    <select id="getList" resultType="HashMap">
+        select * from board order by updated desc;
+    </select>
+    <select id="getSortLike" resultType="HashMap">
+        select * from board order by like_num desc;
+    </select>
+    <select id="getSortView" resultType="HashMap">
+        select * from board order by view_num desc;
+    </select>
+
+    <insert id="addPost" parameterType="kr.hs.dgsw.notice_back.Domain.Board">
+        insert into board(userid,author,title, content,like_num,view_num, kind)
+        values (#{userid},#{author},#{title},#{content},0,0,#{kind});
+    </insert>
+
+    <select id="getView" parameterType="Long" resultType="kr.hs.dgsw.notice_back.Domain.Board">
+        select * from board where id = #{id}
+    </select>
+
+    <update id="updateLike" parameterType="kr.hs.dgsw.notice_back.Domain.Board">
+        update board set like_num = #{like_num} where id = #{id}
+    </update>
+
+    <update id="updateView" parameterType="kr.hs.dgsw.notice_back.Domain.Board">
+        update board set view_num = #{view_num} where id = #{id}
+    </update>
+
+    <update id="updatePost" parameterType="kr.hs.dgsw.notice_back.Domain.Board">
+        update board set title = #{title}, content = #{content}, kind = #{kind} where id = #{id}
+    </update>
+
+    <delete id="deletePost" parameterType="Long">
+        delete from board where id = #{id}
+    </delete>
+
+    <select id="getListByUser" parameterType="Long" resultType="HashMap">
+        select * from board where userid = #{id}
+    </select>
+
+</mapper>
